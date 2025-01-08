@@ -1,0 +1,90 @@
+/* ProductList.css */
+.list-view {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-gap: 3rem;
+  margin: 3rem 0;
+  place-items: center;
+  justify-content: center;
+  background: #1e1e2f;  /* Darker background for a more sleek look */
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  transition: all 0.3s ease-in-out;
+}
+
+.list-view:hover {
+  transform: scale(1.05); /* Zoom-in effect on hover */
+}
+
+@media only screen and (max-width: 768px) {
+  .list-view {
+    padding-top: 4rem;
+  }
+}
+
+.product-card {
+  background-color: #2f2f3e;
+  padding: 1rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-details {
+  font-family: 'Roboto', sans-serif;
+  margin-top: 1rem;
+  color: #fff;
+}
+
+.pname {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.rating-sec {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.star {
+  color: gold;
+  margin-right: 2px;
+}
+
+.add-icon {
+  background-color: #28a745;
+  color: white;
+  font-size: 1.25rem;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.add-icon:hover {
+  background-color: #218838;
+}
+
+.add-icon:focus {
+  outline: none;
+}
+
+.qr-sec {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.qr-sec h5 {
+  color: #ddd;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
