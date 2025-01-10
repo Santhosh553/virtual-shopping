@@ -1,6 +1,6 @@
 /* Global Variables for a Sleek Design */
 :root {
-  --bg-primary: linear-gradient(120deg, #1e293b, #0f172a);
+  --bg-primary: linear-gradient(120deg, #45597b, #b96464);
   --text-primary: #ffffff;
   --highlight: #455fdc; /* Aqua accent */
   --hover-light: rgba(255, 255, 255, 0.1);
