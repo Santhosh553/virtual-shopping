@@ -39,9 +39,10 @@ const LandingPage = () => {
 
       {/* Call to Action Section */}
       <div className="cta-section">
-        <h2>Ready to Start Shopping?</h2>
-        <Link to="/shop" className="cta-button">Shop Now</Link>
+        <h2>Ready to Explore Shopping?</h2>
+        <Link to="/products" className="cta-button">Shop Now</Link>
       </div>
+
     </div>
   );
 };
