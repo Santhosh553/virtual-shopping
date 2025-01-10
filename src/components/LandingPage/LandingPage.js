@@ -1,89 +1,150 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './LandingPage.css'; // Import your CSS for styles
-import demoImage from '../../components/LandingPage/demo.jpg'; // Example promo image
+import './LandingPage.css';
+import demoVideo from '../../components/LandingPage/promo.mp4'; // Replace with your video file
 
 const LandingPage = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-
   useEffect(() => {
-    // Track scroll position to control animations
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
+    // Initialize the canvas for 3D object rendering
+    const canvas = document.getElementById('three-d-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let angleX = 0;
+    let angleY = 0;
+    let isDragging = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    const render3DObject = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw a 3D-like cube (basic example)
+      const size = 100;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+
+      const points = [
+        [-size, -size, -size],
+        [size, -size, -size],
+        [size, size, -size],
+        [-size, size, -size],
+        [-size, -size, size],
+        [size, -size, size],
+        [size, size, size],
+        [-size, size, size],
+      ];
+
+      const rotateX = (point, angle) => {
+        const [x, y, z] = point;
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        return [x, cos * y - sin * z, sin * y + cos * z];
+      };
+
+      const rotateY = (point, angle) => {
+        const [x, y, z] = point;
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        return [cos * x + sin * z, y, -sin * x + cos * z];
+      };
+
+      const project = (point) => {
+        const [x, y, z] = point;
+        const distance = 500;
+        const scale = distance / (distance - z);
+        return [scale * x + centerX, scale * y + centerY];
+      };
+
+      const rotatedPoints = points.map((point) =>
+        project(rotateY(rotateX(point, angleX), angleY))
+      );
+
+      const edges = [
+        [0, 1],
+        [1, 2],
+        [2, 3],
+        [3, 0],
+        [4, 5],
+        [5, 6],
+        [6, 7],
+        [7, 4],
+        [0, 4],
+        [1, 5],
+        [2, 6],
+        [3, 7],
+      ];
+
+      ctx.strokeStyle = '#007bff';
+      ctx.lineWidth = 2;
+
+      edges.forEach(([start, end]) => {
+        const [startX, startY] = rotatedPoints[start];
+        const [endX, endY] = rotatedPoints[end];
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const handleMouseDown = (e) => {
+      isDragging = true;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    };
+
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+
+      const deltaX = e.clientX - lastMouseX;
+      const deltaY = e.clientY - lastMouseY;
+
+      angleY += deltaX * 0.01;
+      angleX += deltaY * 0.01;
+
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+
+      render3DObject();
+    };
+
+    const handleMouseUp = () => {
+      isDragging = false;
+    };
+
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
+    canvas.addEventListener('mouseleave', handleMouseUp);
+
+    render3DObject();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      canvas.removeEventListener('mousedown', handleMouseDown);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseup', handleMouseUp);
+      canvas.removeEventListener('mouseleave', handleMouseUp);
     };
   }, []);
 
   return (
     <div className="landing-page">
-      {/* 3D Animated Banner */}
-      <div className="banner">
-        <div className="banner-content">
-          <h1 className="animate-scroll">Welcome to AR Shopping</h1>
-          <p className="animate-scroll">Experience the future of shopping with VR/AR devices.</p>
+      {/* Video Banner */}
+      <div className="video-banner">
+        <video autoPlay loop muted>
+          <source src={demoVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="video-overlay">
+          <h1>Experience Virtual Shopping</h1>
+          <p>Discover innovative AR products with us!</p>
         </div>
       </div>
 
-      {/* Categories */}
-      <div className="categories">
-        <div className="category-item">
-          <h2 className="animate-scroll">Dresses</h2>
-          <p className="animate-scroll">Browse a wide selection of dresses in AR.</p>
-        </div>
-        <div className="category-item">
-          <h2 className="animate-scroll">Toys</h2>
-          <p className="animate-scroll">Explore toys with your VR device.</p>
-        </div>
-        <div className="category-item">
-          <h2 className="animate-scroll">Chairs</h2>
-          <p className="animate-scroll">Find the perfect chair for your space in AR.</p>
-        </div>
-        <div className="category-item">
-          <h2 className="animate-scroll">Tables</h2>
-          <p className="animate-scroll">Experience furniture shopping in VR.</p>
-        </div>
+      {/* 3D Interactive Object */}
+      <div className="three-d-container">
+        <canvas id="three-d-canvas" className="canvas-container" width="400" height="400"></canvas>
       </div>
-
-      {/* Start Exploring Button */}
-      <div className="start-exploring">
-        <Link to="/products" className="start-exploring-button animate-scroll">
-          Start Exploring
-        </Link>
-      </div>
-
-      {/* Scroll Down to Explore More */}
-      <div className="scroll-text">
-        <p className="animate-scroll">Scroll down to explore more innovative AR shopping experiences.</p>
-      </div>
-
-      {/* 3D Display Cards */}
-      <div className="product-cards">
-        <div className="product-card animate-scroll">
-          <img src={demoImage} alt="Product 1" />
-          <h3>Product 1</h3>
-          <p>Discover amazing AR experiences with this product.</p>
-        </div>
-        <div className="product-card animate-scroll">
-          <img src={demoImage} alt="Product 2" />
-          <h3>Product 2</h3>
-          <p>Experience 3D shopping with this fantastic item.</p>
-        </div>
-        <div className="product-card animate-scroll">
-          <img src={demoImage} alt="Product 3" />
-          <h3>Product 3</h3>
-          <p>Bring your shopping experience to life with AR.</p>
-        </div>
-      </div>
-
-      {/* Call to Action Button */}
-      <Link to="/products" className="view-products-button animate-scroll">
-        View Products
-      </Link>
     </div>
   );
 };
