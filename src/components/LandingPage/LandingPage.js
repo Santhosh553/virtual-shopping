@@ -1,132 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
-import demoVideo from '../../components/LandingPage/promo.mp4'; // Replace with your video file
+import demoVideo from '../../components/LandingPage/promo.mp4';
 
 const LandingPage = () => {
-  useEffect(() => {
-    // Initialize the canvas for 3D object rendering
-    const canvas = document.getElementById('three-d-canvas');
-    const ctx = canvas.getContext('2d');
-
-    let angleX = 0;
-    let angleY = 0;
-    let isDragging = false;
-    let lastMouseX = 0;
-    let lastMouseY = 0;
-
-    const render3DObject = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw a 3D-like cube (basic example)
-      const size = 100;
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-
-      const points = [
-        [-size, -size, -size],
-        [size, -size, -size],
-        [size, size, -size],
-        [-size, size, -size],
-        [-size, -size, size],
-        [size, -size, size],
-        [size, size, size],
-        [-size, size, size],
-      ];
-
-      const rotateX = (point, angle) => {
-        const [x, y, z] = point;
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
-        return [x, cos * y - sin * z, sin * y + cos * z];
-      };
-
-      const rotateY = (point, angle) => {
-        const [x, y, z] = point;
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
-        return [cos * x + sin * z, y, -sin * x + cos * z];
-      };
-
-      const project = (point) => {
-        const [x, y, z] = point;
-        const distance = 500;
-        const scale = distance / (distance - z);
-        return [scale * x + centerX, scale * y + centerY];
-      };
-
-      const rotatedPoints = points.map((point) =>
-        project(rotateY(rotateX(point, angleX), angleY))
-      );
-
-      const edges = [
-        [0, 1],
-        [1, 2],
-        [2, 3],
-        [3, 0],
-        [4, 5],
-        [5, 6],
-        [6, 7],
-        [7, 4],
-        [0, 4],
-        [1, 5],
-        [2, 6],
-        [3, 7],
-      ];
-
-      ctx.strokeStyle = '#007bff';
-      ctx.lineWidth = 2;
-
-      edges.forEach(([start, end]) => {
-        const [startX, startY] = rotatedPoints[start];
-        const [endX, endY] = rotatedPoints[end];
-        ctx.beginPath();
-        ctx.moveTo(startX, startY);
-        ctx.lineTo(endX, endY);
-        ctx.stroke();
-      });
-    };
-
-    const handleMouseDown = (e) => {
-      isDragging = true;
-      lastMouseX = e.clientX;
-      lastMouseY = e.clientY;
-    };
-
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-
-      const deltaX = e.clientX - lastMouseX;
-      const deltaY = e.clientY - lastMouseY;
-
-      angleY += deltaX * 0.01;
-      angleX += deltaY * 0.01;
-
-      lastMouseX = e.clientX;
-      lastMouseY = e.clientY;
-
-      render3DObject();
-    };
-
-    const handleMouseUp = () => {
-      isDragging = false;
-    };
-
-    canvas.addEventListener('mousedown', handleMouseDown);
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseup', handleMouseUp);
-    canvas.addEventListener('mouseleave', handleMouseUp);
-
-    render3DObject();
-
-    return () => {
-      canvas.removeEventListener('mousedown', handleMouseDown);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseup', handleMouseUp);
-      canvas.removeEventListener('mouseleave', handleMouseUp);
-    };
-  }, []);
-
   return (
     <div className="landing-page">
       {/* Video Banner */}
@@ -141,9 +18,29 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* 3D Interactive Object */}
-      <div className="three-d-container">
-        <canvas id="three-d-canvas" className="canvas-container" width="400" height="400"></canvas>
+      {/* Features Section */}
+      <div className="features-section">
+        <h2>Why Shop With Us?</h2>
+        <div className="features">
+          <div className="feature">
+            <h3>Augmented Reality</h3>
+            <p>Try products in your space before you buy.</p>
+          </div>
+          <div className="feature">
+            <h3>Exclusive Deals</h3>
+            <p>Get access to special discounts and offers.</p>
+          </div>
+          <div className="feature">
+            <h3>Fast Shipping</h3>
+            <p>Receive your orders quickly and reliably.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Call to Action Section */}
+      <div className="cta-section">
+        <h2>Ready to Start Shopping?</h2>
+        <Link to="/shop" className="cta-button">Shop Now</Link>
       </div>
     </div>
   );
