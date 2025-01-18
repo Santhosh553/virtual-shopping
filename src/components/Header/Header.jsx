@@ -5,56 +5,56 @@ import "./styles.css";
 const Header = () => {
   const navigationLinks = [
     { label: "Home", Path: "/" },
-    { label:"WishList" ,Path:"/wishlist"},
+    { label: "WishList", Path: "/wishlist" },
     { label: "About", Path: "/about" },
-    // { label: "Contact", Path: "/contact" },
-    // { label: "SignIn", Path: "/sign-in" },
-    // { label: "SignUp", Path: "/sign-up" },
   ];
-  const [showMobileSidebar, setShowMobileSidebar] = useState(true);
-  const handleItemClick = () => {
-    setShowMobileSidebar(true);
+
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setShowMobileSidebar(!showMobileSidebar);
   };
+
+  const handleItemClick = () => {
+    setShowMobileSidebar(false); // Close the menu after clicking a link
+  };
+
   return (
     <header>
-      {/* Mobile Menu Icon */}
       <nav>
         <div className="navtop">
           <h3>
             <Link
               to="/"
-              onClick={() => showMobileSidebar && setShowMobileSidebar(false)}
               className="project-title"
+              onClick={() => setShowMobileSidebar(false)}
             >
-              Virtual AR Placement Tool
+              Virtual Spot
             </Link>
           </h3>
           <div
-            className={`mobile-menu-icon ${!showMobileSidebar ? "active" : ""}`}
-            onClick={() => setShowMobileSidebar(!showMobileSidebar)}
+            className={`mobile-menu-icon ${showMobileSidebar ? "active" : ""}`}
+            onClick={toggleMobileMenu}
           >
-            {Array.from({ length: 2 + showMobileSidebar }, (_, i) => (
-              <div
-                key={i}
-                className={
-                  i === 0 ? "firstbar" : i === 1 ? "secondbar" : "lastbar"
-                }
-              />
-            ))}
-            {/* If the condition is true, only the first, second, and last div elements will be rendered. */}
+            <span />
+            <span />
+            <span />
           </div>
         </div>
-        {/* Desktop Navigation */}
-      </nav>
-      <ul className={`desktop-nav ${showMobileSidebar ? "" : "show"}`}>
-        {navigationLinks.map((items, key) => {
-          return (
+        <ul className="desktop-nav">
+          {navigationLinks.map((items, key) => (
             <li key={key} onClick={handleItemClick}>
               <Link to={items.Path}>{items.label}</Link>
             </li>
-          );
-          /* activeStyle={{ color: "blue", textDecoration: "underline" }} */
-        })}
+          ))}
+        </ul>
+      </nav>
+      <ul className={`mobile-nav ${showMobileSidebar ? "show" : ""}`}>
+        {navigationLinks.map((items, key) => (
+          <li key={key} onClick={handleItemClick}>
+            <Link to={items.Path}>{items.label}</Link>
+          </li>
+        ))}
       </ul>
     </header>
   );
