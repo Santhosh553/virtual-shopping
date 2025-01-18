@@ -7,7 +7,7 @@
   margin: 3rem 0;
   place-items: center;
   justify-content: center;
-  background: #1e1e2f;  /* Darker background for a more sleek look */
+  background: #4a4a66;  /* 1e1e2f Darker background for a more sleek look */
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
   transition: all 0.3s ease-in-out;
 }
