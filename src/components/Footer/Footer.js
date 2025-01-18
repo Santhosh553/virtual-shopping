@@ -62,7 +62,7 @@ function Footer() {
         </form>
       </div> */}
       <div class="last">
-        <p>@ 2025 Virtual AR Placement Tool</p>
+        <p>@ 2025 Virtual SpotLight</p>
       </div>
     </div>
   );
