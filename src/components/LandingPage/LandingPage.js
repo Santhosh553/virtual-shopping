@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
-import demoVideo from '../../components/LandingPage/promo.mp4';
 
 const LandingPage = () => {
   return (
