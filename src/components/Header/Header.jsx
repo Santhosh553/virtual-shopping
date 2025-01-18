@@ -29,7 +29,7 @@ const Header = () => {
               className="project-title"
               onClick={() => setShowMobileSidebar(false)}
             >
-              Virtual Spot
+              Virtual SpotLight
             </Link>
           </h3>
           <div
