@@ -9,7 +9,7 @@ const LandingPage = () => {
       {/* Video Banner */}
       <div className="video-banner">
         <video autoPlay loop muted>
-          <source src={demoVideo} type="video/mp4" />
+        <source src={process.env.PUBLIC_URL + '/promo.mp4'} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="video-overlay">
