@@ -2,7 +2,7 @@
 :root {
   --bg-primary: linear-gradient(120deg, #45597b, #b96464);
   --text-primary: #ffffff;
-  --hover-light: rgb(0, 0, 0);
+  --hover-light: #69aaef;
   --font-primary: "Roboto", sans-serif;
   --transition-speed: 0.4s ease;
 }
@@ -51,7 +51,7 @@ header:hover {
   color: #000000; /* Dark grey for a more refined and professional feel */
   position: relative;
   display: inline-block; /* Ensures proper positioning */
-  padding-bottom: 8px; /* Space for the underline */
+  padding-bottom: 11px; /* Space for the underline */
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
