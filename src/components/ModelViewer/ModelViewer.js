@@ -1,176 +1,92 @@
 import React, { useRef, useState, useEffect } from "react";
 import LazyLoad from "react-lazyload";
 import { QRCodeSVG } from "qrcode.react";
-import Help from "./Help";
+import "./ModelViewer.css";
+
 const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
-  const [selectedVariant, setSelectedVariant] = useState('default');
-  const [display, setDisplay] = useState(false);
   const [ARSupported, setARSupported] = useState(false);
   const [annotate, setAnnotate] = useState(false);
   const [isInWishlist, setIsInWishlist] = useState(false);
-  
-  
-  let modelViewer1 = {
-    backgroundColor: " #ecf0f3",
-    overflowX: "hidden",
-    posterColor: "#eee",
-    width: "100%",
-    height: ARSupported ? "85%" : "75%",
-    borderRadius: 15,
-  };
-  
-  // Accessing product for full screen start
-  const model = useRef();
 
-  // Accessing varient selections element
-  // const varient = useRef(null);
-
-  console.log(item)
-
-  function toggle() {
-    if (!document.fullscreenElement) {
-      model.current.requestFullscreen();
-    } else if (document.exitFullscreen) document.exitFullscreen();
-  }
-  // Full screen code end
-
-
-  const handleAnnotateClick = (annotation) => {
-    const { orbit, target, position } = annotation;
-    model.current.cameraTarget = position;
-    model.current.orbit = target
-  }
+  const modelRef = useRef();
 
   useEffect(() => {
     if (
       navigator.userAgent.match(/iPhone/i) ||
-      navigator.userAgent.match(/webOS/i) ||
-      navigator.userAgent.match(/Android/i) ||
-      navigator.userAgent.match(/iPad/i) ||
-      navigator.userAgent.match(/iPod/i) ||
-      navigator.userAgent.match(/BlackBerry/i) ||
-      navigator.userAgent.match(/Windows Phone/i)
+      navigator.userAgent.match(/Android/i)
     ) {
       setARSupported(true);
     }
   }, []);
-   
+
   useEffect(() => {
-    if(wishlist){
-    const isInWishlist = wishlist.some((wishlistItem) => wishlistItem.id === item.id);
-    setIsInWishlist(isInWishlist);
+    if (wishlist) {
+      const isInWishlist = wishlist.some((wishlistItem) => wishlistItem.id === item.id);
+      setIsInWishlist(isInWishlist);
     }
   }, [item, wishlist]);
+
+  const toggleFullscreen = () => {
+    if (modelRef.current) {
+      if (!document.fullscreenElement) {
+        modelRef.current.requestFullscreen();
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
   const handleAddToWishlist = () => {
     if (isInWishlist) {
       removeFromWishlist(item.id);
-    } 
-    else 
-    {
+    } else {
       addToWishlist(item);
     }
   };
 
   return (
-    <div className="model-view">
+    <div className="model-view-container">
       <model-viewer
         key={item.id}
-        ref={model}
-        style={modelViewer1}
+        ref={modelRef}
         src={item.modelSrc}
         ios-src={item.iOSSrc}
-        alt="A 3D model"
+        alt="3D Model"
         ar
         ar-modes="webxr scene-viewer quick-look"
         camera-controls
         auto-rotate
+      ></model-viewer>
 
-      >
-
+      <div className="model-controls">
         {ARSupported && (
-          <button slot="ar-button" className="arbutton">
-            View in your space
-          </button>
+          <button className="ar-button">View in Your Space</button>
         )}
+        <button onClick={toggleFullscreen}>Fullscreen</button>
+        <button onClick={() => setAnnotate(!annotate)}>Annotations</button>
+      </div>
 
-        <button className="fullscreen-btn" onClick={toggle}>
-          &#x26F6;<span>full screen</span>
-        </button>
-        {display ? (
-          <>
-            <button
-              className={document.fullscreenElement ? "close fz" : "close"}
-              onClick={() => setDisplay(false)}
-            >
-              &#10006;
-            </button>
-            <Help />
-          </>
-        ) : (
-          <>
-            <button className="help-btn" onClick={() => setDisplay(true)}>
-              ?<span>help</span>
-            </button>
-          </>
-        )}
-        
-        <button className="annotate-btn" onClick={() => setAnnotate((prevState) => !prevState)}>
-          i
-        </button>
-
-        {annotate && item.annotations.map((annotate, idx) => (
-          <button
-            key={idx}
-            class="Hotspot"
-            slot={annotate.slot}
-            data-position={annotate.position}
-            data-normal={annotate.normal}
-            data-orbit={annotate.orbit}
-            data-target={annotate.target}
-            data-visibility-attribute="visible"
-            onClick={() => handleAnnotateClick(annotate)}
-          >
-            <div class="HotspotAnnotation">{annotate.title}</div>
-          </button>
-        ))}
-        
-        
-
-      </model-viewer>
-        
       <LazyLoad>
-        {/* Card content below the model-viewer */}
-        <div className="qr-sec">
-          {!ARSupported && (
-            <QRCodeSVG
-              id={item.name}
-              value={window.location.href}
-              size={110}
-              bgColor="#ffffff"
-              fgColor="#000000"
-              level="H"
-              includeMargin
-            />
-          )}
-
+        <div className="product-section">
+          <div className="qr-code">
+            {!ARSupported && (
+              <QRCodeSVG
+                value={window.location.href}
+                size={100}
+                bgColor="#ffffff"
+                fgColor="#000000"
+                level="H"
+              />
+            )}
+          </div>
           <div className="product-details">
-            <div>
-              <div className="pname">{item.name}</div>
-              <div className="rating-sec">
-                <div>Rating</div>
-                <div>
-                  <span className="star">&#9733;</span>
-                  <span className="star">&#9733;</span>
-                  <span className="star">&#9733;</span>
-                  <span>&#9733;</span>
-                  <span>&#9733;</span>
-                </div>
-              </div>
-              <div>Rs. 1000</div>
-              {!ARSupported && <h5>Scan the QR code for AR View on mobile</h5>}
-            </div>
-            <button className="add-icon" onClick={handleAddToWishlist}>
-              {isInWishlist ? '-' : '+'}
+            <h2>{item.name}</h2>
+            <div className="price">Price: Rs. {item.price}</div>
+            <button
+              className="wishlist-btn"
+              onClick={handleAddToWishlist}
+            >
+              {isInWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
             </button>
           </div>
         </div>
