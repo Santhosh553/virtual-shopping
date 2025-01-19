@@ -63,8 +63,18 @@ const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
           <button className="ar-button">View in Your Space</button>
         )}
         <button onClick={toggleFullscreen}>Fullscreen</button>
-        <button onClick={() => setAnnotate(!annotate)}>Annotations</button>
+        <button onClick={() => setAnnotate(!annotate)}>Description</button>
       </div>
+
+      {annotate && (
+        <div className="annotations">
+          <h3>Object Information</h3>
+          <p><b>Name:</b> {item.name}</p>
+          <p><b>Price:</b> Rs. {item.price}</p>
+          <p><b>Description:</b> {item.description}</p>
+          {/* Add more object-specific details here */}
+        </div>
+      )}
 
       <LazyLoad>
         <div className="product-section">

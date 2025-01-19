@@ -1,21 +1,22 @@
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    background-color: #2e2f3e; /* Darker background for contrast */
-    color: #ffffff; /* Light text for better readability */
+    background-color: #2e2f3e;
+    color: #ffffff;
   }
   
   .model-view-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 1200px;
+    width: 100%; /* Full width for responsiveness */
+    max-width: 700px; /* Large size for desktop */
     margin: 40px auto;
     padding: 20px;
     background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    color: #333; /* Default text color inside the container */
+    color: #333;
   }
   
   model-viewer {
@@ -23,7 +24,7 @@ body {
     height: 450px;
     border-radius: 15px;
     margin-bottom: 20px;
-    background-color: #f5f5f5; /* Neutral background for 3D model */
+    background-color: #f5f5f5;
   }
   
   .model-controls {
@@ -53,19 +54,19 @@ body {
   
   .product-section {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 20px;
     width: 100%;
+    align-items: center;
   }
   
   .qr-code {
     text-align: center;
-    flex: 1;
   }
   
   .qr-code img {
+    width: 100px;
+    height: 100px;
     border-radius: 10px;
     background: #f8f9fa;
     padding: 10px;
@@ -75,8 +76,8 @@ body {
   .product-details {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    flex: 2;
+    align-items: center;
+    gap: 10px;
   }
   
   .product-details h2 {
@@ -103,7 +104,6 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    align-self: center;
   }
   
   .product-details .wishlist-btn:hover {
@@ -111,28 +111,44 @@ body {
     box-shadow: 0 5px 15px rgba(108, 99, 255, 0.5);
   }
   
+
+  .annotations {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+  }
+  
+  .annotations h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #6c63ff;
+  }
+  
+  .annotations p {
+    margin: 5px 0;
+    font-size: 1rem;
+  }
+
+  
   /* Responsive Design */
   @media (max-width: 768px) {
     .model-view-container {
+      max-width: 90%; /* Constrain width for mobile */
       padding: 15px;
       margin: 20px;
     }
   
     model-viewer {
-      height: 350px;
+      height: 300px; /* Smaller height for mobile */
     }
   
     .model-controls {
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-    }
-  
-    .product-section {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 15px;
     }
   
     .qr-code img {
@@ -153,4 +169,4 @@ body {
       padding: 10px 15px;
     }
   }
-      
+  
