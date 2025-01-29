@@ -45,6 +45,7 @@ const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
   };
 
   return (
+    <div className="outer-card-container">
     <div className="model-view-container">
       <model-viewer
         key={item.id}
@@ -101,6 +102,7 @@ const ModelViewer = ({ item, addToWishlist, removeFromWishlist, wishlist }) => {
           </div>
         </div>
       </LazyLoad>
+    </div>
     </div>
   );
 };

@@ -4,6 +4,26 @@ body {
     background-color: #2e2f3e;
     color: #ffffff;
   }
+
+
+  .outer-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .model-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Ensure card width adapts */
+    max-width: 350px; /* Control max size for cards */
+  }
+  
   
   .model-view-container {
     display: flex;
