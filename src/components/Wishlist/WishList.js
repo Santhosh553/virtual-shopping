@@ -11,7 +11,7 @@ const WishList = ({ wishlist, onRemoveItem }) => {
         <div className="alert">
           You have no items in your WishList, start adding some!
         </div>
-        <Link to="/" className="button go-back">
+        <Link to="/products" className="button go-back">
           Go Back
         </Link>
       </>
