@@ -47,6 +47,7 @@ const productItems = [
   {
     id: 2,
     name: "Sheen Chair",
+    price: 3000,
     modelSrc: sheenchair,
     iOSSrc: ioschair,
     category: "Furniture",
@@ -73,6 +74,7 @@ const productItems = [
   {
     id: 3,
     name: "Office Chair",
+    price: 1549,
     modelSrc: OfficeChair,
     iOSSrc: OfficeChairUsdz,
     category: "Furniture",
@@ -99,6 +101,7 @@ const productItems = [
   {
     id: 4,
     name: "pot",
+    price: 200,
     modelSrc: pot,
     iOSSrc: potUsdz,
     category: "Environment",
@@ -117,6 +120,7 @@ const productItems = [
   {
     id: 5,
     name: "Painting",
+    price: 1000,
     modelSrc: painting,
     iOSSrc: iospainting,
     category: "Art",
@@ -143,6 +147,7 @@ const productItems = [
   {
     id: 6,
     color: "Blue",
+    price: 2000,
     annotations: [
       {
         title: "plastic-structure",
@@ -164,6 +169,7 @@ const productItems = [
   {
     id: 7,
     name: "Sport Car",
+    price: 1199,
     modelSrc: car1,
     iOSSrc: ioscar1,
     category: "Vehicle",
@@ -189,6 +195,7 @@ const productItems = [
   {
     id: 8,
     name: "IPhone 16",
+    price: 69999,
     modelSrc: iphone16,
     iOSSrc: iosiphone16,
     category: "Electronics",
