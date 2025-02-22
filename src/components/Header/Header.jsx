@@ -7,6 +7,8 @@ const Header = () => {
     { label: "Home", Path: "/" },
     { label: "WishList", Path: "/wishlist" },
     { label: "About", Path: "/about" },
+    { label: "SignIn", Path: "/sign-in" },
+    { label: "SignUp", Path: "/sign-up" },
   ];
 
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
